@@ -7,7 +7,7 @@ type typeModal = {
   children: ReactElement;
   checkOpen: boolean;
   onClose: (value: boolean) => void;
-  closeModal: () => void;
+  closeModal?: () => void;
   position?: Position | null;
 };
 
@@ -23,7 +23,9 @@ export default function PreviewModal({
   const panelRef = useRef<HTMLDivElement>(null);
 
   function onMouseLeave() {
-    closeModal();
+    if (closeModal) {
+      closeModal();
+    }
   }
 
   return (
