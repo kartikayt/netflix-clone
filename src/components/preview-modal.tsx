@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, ReactElement, useRef } from "react";
+import { Position } from "../common/types";
 
 type typeModal = {
   title: string | ReactElement;
@@ -7,6 +8,7 @@ type typeModal = {
   checkOpen: boolean;
   onClose: (value: boolean) => void;
   closeModal: () => void;
+  position?: Position | null;
 };
 
 export default function PreviewModal({
@@ -15,6 +17,7 @@ export default function PreviewModal({
   checkOpen,
   onClose,
   closeModal,
+  position,
 }: typeModal) {
   // let [isOpen, setIsOpen] = useState(true);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -62,17 +65,19 @@ export default function PreviewModal({
                   );
                 }}
               >
-                <Dialog.Panel className="transform overflow-hidden rounded-2xl bg-dark text-left align-middle shadow-xl transition-all">
-                  <div ref={panelRef}>
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-white"
-                    >
-                      {title}
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">{children}</p>
-                    </div>
+                <Dialog.Panel
+                  className="transform overflow-hidden rounded-2xl bg-dark text-left align-middle shadow-xl transition-all"
+                  ref={panelRef}
+                  style={position ? { position: "fixed", ...position } : {}}
+                >
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-white"
+                  >
+                    {title}
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">{children}</p>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
