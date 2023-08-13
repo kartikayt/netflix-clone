@@ -3,8 +3,8 @@ import netflixLogo from "../assets/Netflix_Logo_RGB.png";
 import { useAuth } from "../common/auth";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const { signIn, user } = useAuth();
+export default function Registration() {
+  const { signUp, user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -14,14 +14,15 @@ export default function Login() {
     }
   }, [user]);
 
-  async function authenticateUser(event: React.FormEvent) {
+  async function registerUser(event: React.FormEvent) {
     event.preventDefault();
 
     const { email, password } = event.target as typeof event.target & {
       email: HTMLInputElement;
       password: HTMLInputElement;
     };
-    await signIn(email.value, password.value);
+    await signUp(email.value, password.value);
+    navigate("/login");
   }
 
   return (
@@ -35,11 +36,11 @@ export default function Login() {
         ></section>
         <section className="absolute inset-0 bg-gradient-to-b from-zinc-900/50 "></section>
         <form
-          onSubmit={authenticateUser}
+          onSubmit={registerUser}
           className="relative mx-auto min-h-[70vh] w-[450px] rounded-r-lg bg-black/75 p-16"
         >
           <article className="text-gray-300">
-            <h1 className="mb-4 text-4xl text-white">Sign In</h1>
+            <h1 className="mb-4 text-4xl text-white">Sign Up</h1>
             <section className="flex flex-col gap-4">
               <input
                 className="rounded-md bg-zinc-500 p-2 "
@@ -58,9 +59,9 @@ export default function Login() {
               </button>
             </section>
             <p>
-              New to Netflix?{" "}
-              <Link className="text-white" to="/signup">
-                Sign Up
+              Already have Account?
+              <Link className="text-white" to="/login">
+                Sign In
               </Link>
             </p>
           </article>
